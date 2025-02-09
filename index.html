@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chocolate Day Greeting</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+        
+        body {
+            margin: 0;
+            background-color: #ffebcd;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .card {
+            width: 400px;
+            height: 300px;
+            background: linear-gradient(135deg, #d63384, #ff6b81);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.8);
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            overflow: hidden;
+            transition: box-shadow 0.5s ease-in-out;
+        }
+        .message {
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            opacity: 0.7;
+            animation: fly 10s ease-in-out infinite;
+        }
+        @keyframes fly {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div id="text"></div>
+    </div>
+    <div class="hearts"></div>
+
+    <script>
+        const messages = [
+            "Happy Chocolate Day, my love! 🍫❤️",
+            "Just like chocolate makes everything sweeter,",
+            "you make my life more beautiful and full of happiness.",
+            "Every moment with you is as delightful as my favorite chocolate,",
+            "melting my heart with love and warmth.",
+            "I promise to always be your sweetest reason to smile,",
+            "just like your favorite chocolate bar!",
+            "Love you forever! 😘💕"
+        ];
+
+        let index = 0;
+        function showMessage() {
+            if (index < messages.length) {
+                const textDiv = document.getElementById("text");
+                const newLine = document.createElement("p");
+                newLine.textContent = messages[index];
+                newLine.classList.add("message");
+                textDiv.appendChild(newLine);
+                setTimeout(() => {
+                    newLine.style.opacity = "1";
+                }, 500);
+                
+                if (textDiv.children.length > 2) {
+                    setTimeout(() => {
+                        textDiv.removeChild(textDiv.children[0]);
+                    }, 3000);
+                }
+                index++;
+                setTimeout(showMessage, 3500);
+            }
+        }
+        showMessage();
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = Math.random() * 100 + "vh";
+            heart.style.animationDuration = Math.random() * 7 + 8 + "s";
+            document.querySelector(".hearts").appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
+        }
+        setInterval(createHeart, 700);
+    </script>
+</body>
+</html>
